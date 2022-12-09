@@ -100,5 +100,9 @@ public class LetterSum
         {
             System.out.println(e.getMessage());
         }
+        System.out.printf("There are %d words\n", count);
+        System.out.printf("There are %d even words\n", evenSums);
+        System.out.printf("There are %d odd words\n", oddSums);
+        System.out.printf("%d + %d = %d", evenSums, oddSums, (evenSums+oddSums));
     }
 }
