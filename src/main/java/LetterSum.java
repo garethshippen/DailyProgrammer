@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class LetterSum
 {
-    public static void fakeMain()
+    public static void problemOne()
     {
         int total;
         Scanner input = new Scanner(System.in);
@@ -38,24 +38,36 @@ public class LetterSum
         return total;
     }
 
-    public static void getFile()
+    private static File getFile(String _fileName)
     {
         FileSystem fs = FileSystems.getDefault();
         Path filePath = null;
-        BufferedReader bufferedReader = null;
+        File myFile = null;
         try
         {
             ClassLoader classLoader = LetterSum.class.getClassLoader();
-            URL resource = classLoader.getResource("dailyprogrammer399.txt");
+            URL resource = classLoader.getResource(_fileName);
             filePath = Paths.get(resource.toURI());
-            File myFile = new File(filePath.toUri());
-            bufferedReader = new BufferedReader(new FileReader(myFile));
-
+            myFile = new File(filePath.toUri());
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
         }
+        return myFile;
+    }
 
+    public static void problemTwo(File _myFile)
+    {
+        BufferedReader bufferedReader = null;
+        try
+        {
+            bufferedReader = new BufferedReader(new FileReader(_myFile));
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 }
