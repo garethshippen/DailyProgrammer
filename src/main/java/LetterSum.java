@@ -2,9 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
-import java.nio.Buffer;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
@@ -40,8 +37,7 @@ public class LetterSum
     }
     public static File getFile(String _fileName)
     {
-        FileSystem fs = FileSystems.getDefault();
-        Path filePath = null;
+        Path filePath;
         File myFile = null;
         try
         {
@@ -56,14 +52,15 @@ public class LetterSum
         }
         return myFile;
     }
-    public static String problemOne(File _myFile)
+    public static void problemOne(String _fileName)
     {
-        BufferedReader bufferedReader = null;
+        File myFile = getFile(_fileName);
+        BufferedReader bufferedReader;
         String line = null;
         try
         {
-            bufferedReader = new BufferedReader(new FileReader(_myFile));
-            int total = 0;
+            bufferedReader = new BufferedReader(new FileReader(myFile));
+            int total;
             boolean running = true;
             while(running && (line = bufferedReader.readLine()) != null)
             {
@@ -76,10 +73,11 @@ public class LetterSum
         {
             System.out.println(e.getMessage());
         }
-        return line;
+        System.out.printf("The word with a total of 319 is %s\n", line);
     }
-    public static void problemTwo(File _myFile)
+    public static void problemTwo(String _fileName)
     {
+        File myFile = getFile(_fileName);
         BufferedReader bufferedReader;
         int evenSums = 0;
         int oddSums = 0;
@@ -88,7 +86,7 @@ public class LetterSum
         int count = 0;
         try
         {
-            bufferedReader = new BufferedReader(new FileReader(_myFile));
+            bufferedReader = new BufferedReader(new FileReader(myFile));
             while((line = bufferedReader.readLine()) != null)
             {
                 count++;
@@ -103,6 +101,39 @@ public class LetterSum
         System.out.printf("There are %d words\n", count);
         System.out.printf("There are %d even words\n", evenSums);
         System.out.printf("There are %d odd words\n", oddSums);
-        System.out.printf("%d + %d = %d", evenSums, oddSums, (evenSums+oddSums));
+        System.out.printf("%d + %d = %d\n", evenSums, oddSums, (evenSums+oddSums));
+    }
+    public static void problemThree(String _fileName)
+    {
+        File myFile = getFile(_fileName);
+        BufferedReader bufferedReader;
+        int[] totals = new int[320];
+        String line;
+        int highest = 0;
+        int highestIndex = 0;
+        int total;
+        int count = 0;
+        try
+        {
+            bufferedReader = new BufferedReader(new FileReader(myFile));
+            while((line = bufferedReader.readLine()) != null)
+            {
+                total = addLetters(line);
+                totals[total]++;
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        for(int i = 1; i < 320; i++)
+        {
+            if(totals[i] > highest)
+            {
+                highest = totals[i];
+                highestIndex = i;
+            }
+        }
+        System.out.printf("The most totals was %d occuring %d times\n", totals[highestIndex], highestIndex);
     }
 }
